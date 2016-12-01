@@ -1,11 +1,9 @@
-
-@mainReader = FileInput.new('base_stations.txt')
-@mainReader.read_in
-
 class FileReader
+  attr_accessor :allStations
 
   def initialize(filename)
     @fileName = filename
+    @allStations = BaseStations.new
   end
 
   def read_in
@@ -16,13 +14,13 @@ class FileReader
     if !lines.empty?
       lines.each do |line|
         temparr = line.split
-        @Cell[@counter] = (Cell.new(temparr[1], temparr[2])
+        @Cell[@counter] = (Cell.new(temparr[1], temparr[2]))
         @BaseStation[@counter] = (BaseStation.new(temparr[0],@Cell[@counter]))
+        @allStations.add_station(@BaseStation[@counter])
         @counter += 1
       end
-    else
-      @error = "Error: File Empty"
-      puts @error
+        else
+        puts 'Error: File Empty'
     end
   end
 
@@ -36,7 +34,7 @@ class Cell
   end
 
   def to_s
-    puts "(#{@x},#{@y}"
+    print "(#{@x},#{@y}"
   end
 
 end
@@ -50,7 +48,8 @@ class BaseStation
   end
 
   def to_s
-
+    print "(#{@name} "
+    print @cell.to_s
   end
 
 end
@@ -69,7 +68,15 @@ class BaseStations
   end
 
   def to_s
-    puts
+    puts "Here are the base stations:"
+    @stationArr.each do |i|
+      puts @stationArr[i].to_s
+    end
   end
 
 end
+
+@mainReader = FileReader.new('base_stations.txt')
+@mainReader.read_in
+@stationList = @mainReader.allStations
+@stationList.to_s
