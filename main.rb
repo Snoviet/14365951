@@ -42,8 +42,22 @@ class Cell
     @tempX2 = 0
     @tempY1 = @y
     @tempY2 = 0
+    if @tempX2 < @tempX1
+      @tempX1, @tempX2= @tempX2, @tempX1
+    end
+    if @tempy2 < @tempY1
+      @tempY1, @tempY2= @tempY2, @tempY1
+    end
+
     @distance = Math.sqrt(((@tempX2-@tempX1)*(@tempX2-@tempX1))+((@tempY2-@tempY1)*(@tempY2-@tempY1)))
-    @coverage = (1/1+@distance)
+
+    while
+    @distance = Math.sqrt(((@tempX2-@tempX1)*(@tempX2-@tempX1))+((@tempY2-@tempY1)*(@tempY2-@tempY1)))
+      if @lowest > @distance
+        @lowest = @distance
+      end
+    end
+    @coverage = (1/1+@lowest)
   end
 
 end
@@ -102,23 +116,6 @@ class Grid
   end
 
 end
-
-
-=begin
-class Grid
-
-  def initialize(x, y)
-    @dimX = x
-    @dimY = y
-    @grid[x, y]
-  end
-
-  def size
-    puts "Size of Grid: #{@dimX * @dimY}"
-  end
-
-end
-=end
 
 @mainReader = FileReader.new('base_stations.txt')
 @mainReader.read_in
