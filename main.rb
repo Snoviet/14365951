@@ -34,11 +34,14 @@ class Cell
   end
 
   def to_s
-    print "(#{@x},#{@y}"
+    print "(#{@x},#{@y}) "
+  end
+
+  def coverage
+    @distance = Math.sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)))
   end
 
 end
-
 
 class BaseStation
 
@@ -48,7 +51,7 @@ class BaseStation
   end
 
   def to_s
-    print "(#{@name} "
+    print "#{@name} "
     print @cell.to_s
   end
 
@@ -65,13 +68,29 @@ class BaseStations
   def add_station(station)
     @stationArr[@counter] = station
     @counter = @counter + 1
+    @i = 0
   end
 
   def to_s
     puts "Here are the base stations:"
-    @stationArr.each do |i|
-      puts @stationArr[i].to_s
+    while @i < (@counter+1)
+      print @stationArr[@i].to_s
+      @i = @i + 1
     end
+  end
+
+end
+
+class Grid
+
+  def initialize(x, y)
+    @x = x
+    @y = y
+    @grid[x, y]
+  end
+
+  def size
+    puts "Size of Grid: #{@x * @y}"
   end
 
 end
