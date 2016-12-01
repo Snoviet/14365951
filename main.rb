@@ -6,7 +6,7 @@ class FileReader
     @allStations = BaseStations.new(21, 21)
   end
 
-  def read_in
+  def read_in_stations
     @counter = 0
     @BaseStation = []
     @Cell = []
@@ -185,12 +185,14 @@ class Grid
 end
 
 @mainReader = FileReader.new('base_stations.txt')
-@mainReader.read_in
+@mainReader.read_in_stations
 puts
+
 @mainGrid = Grid.new(21, 21)
 @mainGrid.grid_dimensions
 @mainGrid.grid_size
 puts
+
 @stationList = @mainReader.allStations
 @stationList.to_s
 puts
