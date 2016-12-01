@@ -15,9 +15,8 @@ class FileReader
       lines.each do |line|
         temparr = line.split
         @Cell[@counter] = (Cell.new(temparr[1], temparr[2]))
-        @BaseStation[@counter] = (BaseStation.new(temparr[0]))
-        @Cell.add_station(@BaseStation[@counter])
-        #@allStations.add_station(@BaseStation[@counter])
+        @BaseStation[@counter] = (BaseStation.new(temparr[0],@Cell[@counter]))
+        @allStations.add_station(@BaseStation[@counter])
         @counter += 1
       end
         else
@@ -34,13 +33,8 @@ class Cell
     @y = y
   end
 
-  def add_station(station)
-    @Station = station
-  end
-
   def to_s
-    print @Station.name
-    print " (#{@x},#{@y}) "
+    print "(#{@x},#{@y}) "
   end
 
   def coverage
@@ -50,19 +44,15 @@ class Cell
 end
 
 class BaseStation
-  attr_accessor :name
 
-  def initialize(name)
+  def initialize(name, cell)
     @name = name
-  end
-
-  def set_location(x, y)
-    @cellX = x
-    @cellY = y
+    @cell = cell
   end
 
   def to_s
     print "#{@name} "
+    print @cell.to_s
   end
 
 end
@@ -73,9 +63,9 @@ class BaseStations
   def initialize(x, y)
     @stationArr = []
     @counter = 0
-    @dimX = x.to_i
-    @dimY = y.to_i
-    @gridDim = [@dimX, @dimY]
+    #@dimX = x.to_i
+    #@dimY = y.to_i
+    #@grid[@dimX, @dimY]
   end
 
   def add_station(station)
@@ -92,9 +82,9 @@ class BaseStations
     end
   end
 
-def grid_size
-  puts "Size of Grid: #{@dimX * @dimY}"
-end
+#def grid_size
+#  puts "Size of Grid: #{@dimX * @dimY}"
+#end
 
 end
 
@@ -117,5 +107,5 @@ end
 
 @mainReader = FileReader.new('base_stations.txt')
 @mainReader.read_in
-#@stationList = @mainReader.allStations
+@stationList = @mainReader.allStations
 @stationList.to_s
