@@ -32,6 +32,7 @@ class Cell
   def initialize(x, y)
     @x = x
     @y = y
+    @strength = 'aaa'
   end
 
   def to_s
@@ -57,6 +58,8 @@ class Cell
         @tempY1, @tempY2= @tempY2, @tempY1
       end
 
+      puts
+
       @temp = Math.sqrt(((@tempX2-@tempX1)*(@tempX2-@tempX1))+((@tempY2-@tempY1)*(@tempY2-@tempY1)))
       if @counter > 0
         if @temp < @distance
@@ -69,7 +72,18 @@ class Cell
       @counter += 1
     end
     @coverage = (1/1+@distance)
+    set_strength(@coverage)
     puts @coverage
+  end
+
+  def set_strength(coverage)
+    if coverage <= 0.1
+      @strength = 'weak'
+    elsif (coverage <= 0.3) && (coverage > 0.1)
+      @strength = 'medium'
+    elsif coverage > 0.3
+      @strength = 'strong'
+    end
   end
 
 end
