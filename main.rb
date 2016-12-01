@@ -27,6 +27,7 @@ class FileReader
 end
 
 class Cell
+  attr_accessor :x, :y
 
   def initialize(x, y)
     @x = x
@@ -43,16 +44,12 @@ class Cell
     @stationsTemp = stations
     #puts @stationsTemp.length
 
-
-
-    @distance = (Math.sqrt(((@tempX2 - @tempX1)*(@tempX2 - @tempX1))+((@tempY2 - @tempY1)*(@tempY2 - @tempY1))))
-
     while @counter < @stationsTemp.length
 
-      @tempX1 = (@x + 0.5).to_f
-      @tempX2 = (@stationsTemp[@counter].cell.x + 0.5).to_f
-      @tempY1 = (@y + 0.5).to_f
-      @tempY2 = (@stationsTemp[@counter].cell.y + 0.5).to_f
+      @tempX1 = (@x.to_f + 0.5)
+      @tempX2 = (@stationsTemp[@counter].cell.x.to_f + 0.5)
+      @tempY1 = (@y.to_f + 0.5)
+      @tempY2 = (@stationsTemp[@counter].cell.y.to_f + 0.5)
       if @tempX2 < @tempX1
         @tempX1, @tempX2= @tempX2, @tempX1
       end
@@ -72,6 +69,7 @@ class Cell
       @counter += 1
     end
     @coverage = (1/1+@distance)
+    puts @coverage
   end
 
 end
@@ -144,5 +142,5 @@ puts
 @stationList.to_s
 puts
 
-@testLocation = Cell.new(3,5)
+@testLocation = Cell.new(10, 10)
 @testLocation.coverage(@stationList.stationArr)
