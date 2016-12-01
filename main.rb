@@ -37,9 +37,9 @@ class Cell
     print "(#{@x},#{@y}) "
   end
 
-  def coverage
+  def coverage(stations)
     @tempX1 = @x
-    @tempX2 = 0
+    @tempX2 =
     @tempY1 = @y
     @tempY2 = 0
     if @tempX2 < @tempX1
@@ -63,6 +63,7 @@ class Cell
 end
 
 class BaseStation
+  attr_accessor :cell
 
   def initialize(name, cell)
     @name = name
@@ -78,6 +79,7 @@ end
 
 
 class BaseStations
+  attr_accessor :stationArr
 
   def initialize(x, y)
     @stationArr = []
@@ -127,3 +129,6 @@ puts
 @stationList = @mainReader.allStations
 @stationList.to_s
 puts
+
+@testLocation = Cell.new(3,5)
+@testLocation.coverage(@stationList.stationArr)
