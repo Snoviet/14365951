@@ -169,7 +169,8 @@ class Grid
     print "WEAK CELLS: "
     @counter1 = 0
     while @counter1 < @counter2
-    print @weakCells[@counter1]
+    @weakCells[@counter1].to_s
+    @counter1 += 1
       end
   end
 
