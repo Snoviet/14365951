@@ -46,10 +46,6 @@ class Cell
     @coverage = (1/1+@distance)
   end
 
-  def banter
-    puts 'yolo'
-  end
-
 end
 
 class BaseStation
@@ -72,9 +68,6 @@ class BaseStations
   def initialize(x, y)
     @stationArr = []
     @counter = 0
-    #@dimX = x.to_i
-    #@dimY = y.to_i
-    #@grid[@dimX, @dimY]
   end
 
   def add_station(station)
@@ -91,9 +84,22 @@ class BaseStations
     end
   end
 
-#def grid_size
-#  puts "Size of Grid: #{@dimX * @dimY}"
-#end
+end
+
+class Grid
+
+  def initialize(x, y)
+    @dimX = x
+    @dimY = y
+  end
+
+  def grid_dimensions
+    puts "Dimensions of Grid: (#{@dimX}, #{@dimY})"
+  end
+
+  def grid_size
+    puts "Size of Grid: #{@dimX * @dimY}"
+  end
 
 end
 
@@ -116,5 +122,11 @@ end
 
 @mainReader = FileReader.new('base_stations.txt')
 @mainReader.read_in
+puts
+@mainGrid = Grid.new(21, 21)
+@mainGrid.grid_dimensions
+@mainGrid.grid_size
+puts
 @stationList = @mainReader.allStations
 @stationList.to_s
+puts
