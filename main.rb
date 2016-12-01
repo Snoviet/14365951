@@ -3,7 +3,7 @@ class FileReader
 
   def initialize(filename)
     @fileName = filename
-    @allStations = BaseStations.new
+    @allStations = BaseStations.new(21, 21)
   end
 
   def read_in
@@ -60,9 +60,14 @@ end
 
 class BaseStations
 
-  def initialize
+  def initialize(x, y)
     @stationArr = []
     @counter = 0
+    @dimX = x.to_i
+    @dimY = y.to_i
+    @gridDim = [@dimX, @dimY]
+
+    #print @gridDim
   end
 
   def add_station(station)
@@ -79,21 +84,28 @@ class BaseStations
     end
   end
 
+def grid_size
+  puts "Size of Grid: #{@dimX * @dimY}"
 end
 
+end
+
+
+=begin
 class Grid
 
   def initialize(x, y)
-    @x = x
-    @y = y
+    @dimX = x
+    @dimY = y
     @grid[x, y]
   end
 
   def size
-    puts "Size of Grid: #{@x * @y}"
+    puts "Size of Grid: #{@dimX * @dimY}"
   end
 
 end
+=end
 
 @mainReader = FileReader.new('base_stations.txt')
 @mainReader.read_in
