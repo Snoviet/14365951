@@ -136,27 +136,41 @@ class Grid
     @strong = 0
     @medium = 0
     @weak = 0
+    @weakCells = []
+    @cellArr = []
   end
 
-  def total_coverage
+  def total_coverage(station)
+    @counter1 = 0
+    @counter2 = 0
     i = 0
     while i < @dimX
       j = 0
       while j < @dimY
-        @cell = Cell.new(i, j)
-        if @cell.coverage == 'strong'
+        @cellArr[@counter1] = Cell.new(i, j)
+        if @cellArr[@counter1].coverage(station) == 'strong'
           @strong += 1
-        elsif @cell.coverage == 'medium'
+        elsif @cellArr[@counter1].coverage(station) == 'medium'
           @medium += 1
-        elsif @cell.coverage == 'weak'
-          @weak
+        elsif @cellArr[@counter1].coverage(station) == 'weak'
+          @weak += 1
+          @weakCells[@counter2] = @cellArr[@counter1]
+          @counter2 += 1
         end
         j += 1
+        @counter1 += 1
       end
       i += 1
     end
 
-    puts 'number of cells with weak coverage: #{}'
+    puts "number of cells with weak coverage: #{@weak}"
+    puts "number of cells with medium coverage: #{@medium}"
+    puts "number of cells with strong coverage: #{@strong}"
+    print "WEAK CELLS: "
+    @counter1 = 0
+    while @counter1 < @counter2
+    print @weakCells[@counter1]
+      end
   end
 
   def grid_dimensions
@@ -179,7 +193,7 @@ puts
 @stationList = @mainReader.allStations
 @stationList.to_s
 puts
+puts
 
-@testLocation = Cell.new(5, 5)
-@testLocation.coverage(@stationList.stationArr)
-puts @testLocation.strength
+@mainGrid.total_coverage(@stationList.stationArr)
+puts
