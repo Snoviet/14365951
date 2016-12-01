@@ -52,22 +52,12 @@ class Cell
       @tempY1 = (@y.to_f + 0.5)
       @tempY2 = (@stationsTemp[@counter].cell.y.to_f + 0.5)
 
-      puts @tempX1
-      puts @tempY1
-      puts @tempX2
-      puts @tempY2
-
       if @tempX2 < @tempX1
         @tempX1, @tempX2= @tempX2, @tempX1
       end
       if @tempY2 < @tempY1
         @tempY1, @tempY2 = @tempY2, @tempY1
       end
-
-      puts @tempX1
-      puts @tempY1
-      puts @tempX2
-      puts @tempY2
 
       @temp = Math.sqrt(((@tempX2-@tempX1)*(@tempX2-@tempX1))+((@tempY2-@tempY1)*(@tempY2-@tempY1)))
 
@@ -79,13 +69,11 @@ class Cell
         @distance = @temp
       end
 
-      puts @distance
-
       @counter += 1
     end
     @coverage = (1 / (1+@distance))
     set_strength(@coverage)
-    puts @coverage
+    @strength
   end
 
   def set_strength(coverage)
@@ -145,6 +133,30 @@ class Grid
   def initialize(x, y)
     @dimX = x
     @dimY = y
+    @strong = 0
+    @medium = 0
+    @weak = 0
+  end
+
+  def total_coverage
+    i = 0
+    while i < @dimX
+      j = 0
+      while j < @dimY
+        @cell = Cell.new(i, j)
+        if @cell.coverage == 'strong'
+          @strong += 1
+        elsif @cell.coverage == 'medium'
+          @medium += 1
+        elsif @cell.coverage == 'weak'
+          @weak
+        end
+        j += 1
+      end
+      i += 1
+    end
+
+    puts 'number of cells with weak coverage: #{}'
   end
 
   def grid_dimensions
