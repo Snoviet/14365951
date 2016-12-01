@@ -15,7 +15,8 @@ class FileReader
       lines.each do |line|
         temparr = line.split
         @Cell[@counter] = (Cell.new(temparr[1], temparr[2]))
-        @BaseStation[@counter] = (BaseStation.new(temparr[0],@Cell[@counter]))
+        @BaseStation[@counter] = (BaseStation.new(temparr[0]))
+        @Cell.add_station(@BaseStation[@counter])
         @allStations.add_station(@BaseStation[@counter])
         @counter += 1
       end
@@ -33,6 +34,10 @@ class Cell
     @y = y
   end
 
+  def add_station(station)
+    @Station = station
+  end
+
   def to_s
     print "(#{@x},#{@y}) "
   end
@@ -45,9 +50,10 @@ end
 
 class BaseStation
 
-  def initialize(name, cell)
+  def initialize(name, x, y)
     @name = name
-    @cell = cell
+    @cellX = x
+    @cellY = y
   end
 
   def to_s
@@ -66,8 +72,6 @@ class BaseStations
     @dimX = x.to_i
     @dimY = y.to_i
     @gridDim = [@dimX, @dimY]
-
-    #print @gridDim
   end
 
   def add_station(station)
