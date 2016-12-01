@@ -27,7 +27,7 @@ class FileReader
 end
 
 class Cell
-  attr_accessor :x, :y
+  attr_accessor :x, :y, :strength
 
   def initialize(x, y)
     @x = x
@@ -51,27 +51,39 @@ class Cell
       @tempX2 = (@stationsTemp[@counter].cell.x.to_f + 0.5)
       @tempY1 = (@y.to_f + 0.5)
       @tempY2 = (@stationsTemp[@counter].cell.y.to_f + 0.5)
+
+      puts @tempX1
+      puts @tempY1
+      puts @tempX2
+      puts @tempY2
+
       if @tempX2 < @tempX1
         @tempX1, @tempX2= @tempX2, @tempX1
       end
       if @tempY2 < @tempY1
-        @tempY1, @tempY2= @tempY2, @tempY1
+        @tempY1, @tempY2 = @tempY2, @tempY1
       end
 
-      puts
+      puts @tempX1
+      puts @tempY1
+      puts @tempX2
+      puts @tempY2
 
       @temp = Math.sqrt(((@tempX2-@tempX1)*(@tempX2-@tempX1))+((@tempY2-@tempY1)*(@tempY2-@tempY1)))
+
       if @counter > 0
         if @temp < @distance
           @distance = @temp
         end
       else
         @distance = @temp
-        end
+      end
+
+      puts @distance
 
       @counter += 1
     end
-    @coverage = (1/1+@distance)
+    @coverage = (1 / (1+@distance))
     set_strength(@coverage)
     puts @coverage
   end
@@ -156,5 +168,6 @@ puts
 @stationList.to_s
 puts
 
-@testLocation = Cell.new(10, 10)
+@testLocation = Cell.new(5, 5)
 @testLocation.coverage(@stationList.stationArr)
+puts @testLocation.strength
