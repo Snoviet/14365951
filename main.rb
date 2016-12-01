@@ -38,26 +38,40 @@ class Cell
   end
 
   def coverage(stations)
-    @tempX1 = @x
-    @tempX2 =
-    @tempY1 = @y
-    @tempY2 = 0
-    if @tempX2 < @tempX1
-      @tempX1, @tempX2= @tempX2, @tempX1
-    end
-    if @tempy2 < @tempY1
-      @tempY1, @tempY2= @tempY2, @tempY1
-    end
 
-    @distance = Math.sqrt(((@tempX2-@tempX1)*(@tempX2-@tempX1))+((@tempY2-@tempY1)*(@tempY2-@tempY1)))
+    @counter = 0
+    @stationsTemp = stations
+    #puts @stationsTemp.length
 
-    while
-    @distance = Math.sqrt(((@tempX2-@tempX1)*(@tempX2-@tempX1))+((@tempY2-@tempY1)*(@tempY2-@tempY1)))
-      if @lowest > @distance
-        @lowest = @distance
+
+
+    @distance = (Math.sqrt(((@tempX2 - @tempX1)*(@tempX2 - @tempX1))+((@tempY2 - @tempY1)*(@tempY2 - @tempY1))))
+
+    while @counter < @stationsTemp.length
+
+      @tempX1 = (@x + 0.5).to_f
+      @tempX2 = (@stationsTemp[@counter].cell.x + 0.5).to_f
+      @tempY1 = (@y + 0.5).to_f
+      @tempY2 = (@stationsTemp[@counter].cell.y + 0.5).to_f
+      if @tempX2 < @tempX1
+        @tempX1, @tempX2= @tempX2, @tempX1
       end
+      if @tempY2 < @tempY1
+        @tempY1, @tempY2= @tempY2, @tempY1
+      end
+
+      @temp = Math.sqrt(((@tempX2-@tempX1)*(@tempX2-@tempX1))+((@tempY2-@tempY1)*(@tempY2-@tempY1)))
+      if @counter > 0
+        if @temp < @distance
+          @distance = @temp
+        end
+      else
+        @distance = @temp
+        end
+
+      @counter += 1
     end
-    @coverage = (1/1+@lowest)
+    @coverage = (1/1+@distance)
   end
 
 end
