@@ -38,7 +38,16 @@ class Cell
   end
 
   def coverage
-    @distance = Math.sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)))
+    @tempX1 = @x
+    @tempX2 = 0
+    @tempY1 = @y
+    @tempY2 = 0
+    @distance = Math.sqrt(((@tempX2-@tempX1)*(@tempX2-@tempX1))+((@tempY2-@tempY1)*(@tempY2-@tempY1)))
+    @coverage = (1/1+@distance)
+  end
+
+  def banter
+    puts 'yolo'
   end
 
 end
