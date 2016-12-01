@@ -17,7 +17,7 @@ class FileReader
         @Cell[@counter] = (Cell.new(temparr[1], temparr[2]))
         @BaseStation[@counter] = (BaseStation.new(temparr[0]))
         @Cell.add_station(@BaseStation[@counter])
-        @allStations.add_station(@BaseStation[@counter])
+        #@allStations.add_station(@BaseStation[@counter])
         @counter += 1
       end
         else
@@ -39,7 +39,8 @@ class Cell
   end
 
   def to_s
-    print "(#{@x},#{@y}) "
+    print @Station.name
+    print " (#{@x},#{@y}) "
   end
 
   def coverage
@@ -49,16 +50,19 @@ class Cell
 end
 
 class BaseStation
+  attr_accessor :name
 
-  def initialize(name, x, y)
+  def initialize(name)
     @name = name
+  end
+
+  def set_location(x, y)
     @cellX = x
     @cellY = y
   end
 
   def to_s
     print "#{@name} "
-    print @cell.to_s
   end
 
 end
@@ -113,5 +117,5 @@ end
 
 @mainReader = FileReader.new('base_stations.txt')
 @mainReader.read_in
-@stationList = @mainReader.allStations
+#@stationList = @mainReader.allStations
 @stationList.to_s
